@@ -19,6 +19,17 @@ function getImageSize(node: HTMLElement, options: Options = {}) {
   return { width, height }
 }
 
+export async function toComputedNode<T extends HTMLElement>(
+  node: T,
+  options: Options = {},
+): Promise<HTMLElement> {
+  return Promise.resolve(node)
+    .then((nativeNode) => cloneNode(nativeNode, options, true))
+    .then((clonedNode) => embedWebFonts(clonedNode!, options))
+    .then((clonedNode) => embedImages(clonedNode, options))
+    .then((clonedNode) => applyStyleWithOptions(clonedNode, options))
+}
+
 export async function toSvg<T extends HTMLElement>(
   node: T,
   options: Options = {},
