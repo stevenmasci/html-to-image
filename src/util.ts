@@ -189,6 +189,12 @@ export function createImage(url: string): Promise<HTMLImageElement> {
   })
 }
 
+export async function nodeToBase64(svg: HTMLElement): Promise<string> {
+  return Promise.resolve()
+    .then(() => new XMLSerializer().serializeToString(svg))
+    .then(btoa)
+}
+
 export async function svgToDataURL(svg: SVGElement): Promise<string> {
   return Promise.resolve()
     .then(() => new XMLSerializer().serializeToString(svg))
