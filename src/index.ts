@@ -10,6 +10,7 @@ import {
   createImage,
   canvasToBlob,
   nodeToDataURL,
+  nodeToBase64,
 } from './util'
 
 function getImageSize(node: HTMLElement, options: Options = {}) {
@@ -28,6 +29,15 @@ export async function toComputedNode<T extends HTMLElement>(
     .then((clonedNode) => embedWebFonts(clonedNode!, options))
     .then((clonedNode) => embedImages(clonedNode, options))
     .then((clonedNode) => applyStyleWithOptions(clonedNode, options))
+}
+
+export async function toComputedNodeBase64<T extends HTMLElement>(
+  node: T,
+  options: Options = {},
+): Promise<String> {
+  return Promise.resolve(node)
+    .then((nativeNode) => toComputedNode(nativeNode, options))
+    .then((clonedNode) => nodeToBase64(clonedNode))
 }
 
 export async function toSvg<T extends HTMLElement>(
